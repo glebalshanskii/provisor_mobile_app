@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SpeechToTextPOC</string>
+    <string name="speak">SPEAK</string>
+    <string name="repeat">REPEAT</string>
+    <string name="next"><![CDATA[NEXT >>]]></string>
+    <string name="no_data">No data received!</string>
+    <string name="please_read_the_text">Please, read the text</string>
+    <string name="recognition_error">Recognition error!</string>
+</resources>
