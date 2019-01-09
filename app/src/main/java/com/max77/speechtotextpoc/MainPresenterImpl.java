@@ -1,6 +1,8 @@
 package com.max77.speechtotextpoc;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -30,6 +32,7 @@ class MainPresenterImpl implements MainPresenter {
     private SpeechRecognizer mSpeechRecognizer;
     private PhraseApi mPhraseApi;
     private PhraseInfo mCurrentPhrase;
+    private AudioManager mAudioManager;
 
     public MainPresenterImpl(MainView view) {
         mView = view;
@@ -38,6 +41,7 @@ class MainPresenterImpl implements MainPresenter {
     @Override
     public void setup() {
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(mView.getContext());
+        mAudioManager = (AudioManager) mView.getContext().getSystemService(Context.AUDIO_SERVICE);
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
@@ -131,9 +135,11 @@ class MainPresenterImpl implements MainPresenter {
                 isBusy = false;
                 mView.enableSpeakButton(true);
                 mView.enableNextButton(true);
+//                mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             }
         });
 
+        mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
         mSpeechRecognizer.startListening(new Intent()
                 .putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ru-RU")
                 .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
